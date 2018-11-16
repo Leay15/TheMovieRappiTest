@@ -10,5 +10,5 @@ interface TopRatedViewModel {
 
     fun onGetTopRatedMovies(topRatedResponse: TopRatedResponse)
 
-    fun onError(message: String)
+    fun onError(message: String?)
 }

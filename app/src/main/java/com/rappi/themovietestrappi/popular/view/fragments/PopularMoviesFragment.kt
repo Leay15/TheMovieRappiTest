@@ -43,10 +43,16 @@ class PopularMoviesFragment : Fragment(), PopularViewModel {
         popularMoviesPresenter.bind(this)
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        popularMoviesPresenter.unbind()
+    }
+
     override fun onResume() {
         super.onResume()
         popularMoviesPresenter.getPopularMovies(1)
     }
+
     override fun showLoading() {
 
     }
@@ -56,7 +62,7 @@ class PopularMoviesFragment : Fragment(), PopularViewModel {
     }
 
     override fun onGetMovies(popularResponse: PopularResponse) {
-        Log.e("OK", "Ok")
+        Log.e("OK", "OkPopular")
     }
 
     override fun onError(message: String?) {

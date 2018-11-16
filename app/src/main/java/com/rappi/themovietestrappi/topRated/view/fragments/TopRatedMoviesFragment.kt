@@ -2,6 +2,7 @@ package com.rappi.themovietestrappi.topRated.view.fragments
 
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,12 +16,12 @@ import com.rappi.themovietestrappi.topRated.presentation.presenter.TopRatedPrese
 import com.rappi.themovietestrappi.topRated.viewModel.TopRatedViewModel
 import javax.inject.Inject
 
-class TopRatedFragment : Fragment(), TopRatedViewModel {
+class TopRatedMoviesFragment : Fragment(), TopRatedViewModel {
 
     @Inject
     lateinit var topRatedPresenter: TopRatedPresenter
 
-    private val TopRatedComponent by lazy {
+    private val topRatedComponent by lazy {
         DaggerTopRatedComponent.builder()
             .applicationComponent(context!!.getApplicationComponent())
             .topRatedModule(TopRatedModule())
@@ -38,23 +39,30 @@ class TopRatedFragment : Fragment(), TopRatedViewModel {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        TopRatedComponent.inject(this)
+        topRatedComponent.inject(this)
+        topRatedPresenter.bind(this)
+    }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        topRatedPresenter.unbind()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        topRatedPresenter.getTopRatedMovies(1)
     }
 
     override fun showLoading() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun hideLoading() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun onGetTopRatedMovies(topRatedResponse: TopRatedResponse) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        Log.e("Ok", "OkTopRated")
     }
 
-    override fun onError(message: String) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun onError(message: String?) {
     }
 }

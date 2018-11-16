@@ -2,6 +2,8 @@ package com.rappi.themovietestrappi.topRated.presentation.presenter
 
 import com.rappi.themovietestrappi.topRated.presentation.interactor.TopRatedInteractor
 import com.rappi.themovietestrappi.topRated.viewModel.TopRatedViewModel
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 class TopRatedPresenterImpl @Inject constructor(private val topRatedInteractor: TopRatedInteractor) :
@@ -18,6 +20,13 @@ class TopRatedPresenterImpl @Inject constructor(private val topRatedInteractor: 
     }
 
     override fun getTopRatedMovies(page: Int) {
-
+        topRatedInteractor.getTopRatedMoview(page)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io())
+            .subscribe({
+                topRatedViewModel?.onGetTopRatedMovies(it)
+            }, {
+                topRatedViewModel?.onError(it?.message)
+            })
     }
 }
