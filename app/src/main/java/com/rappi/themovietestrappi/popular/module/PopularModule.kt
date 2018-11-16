@@ -1,6 +1,7 @@
 package com.rappi.themovietestrappi.popular.module
 
 import com.rappi.themovietestrappi.net.retrofit.interfaces.PopularMoviesService
+import com.rappi.themovietestrappi.popular.presentation.interactor.PopularMoviesInteractor
 import com.rappi.themovietestrappi.popular.presentation.interactor.PopularMoviesInteractorImpl
 import com.rappi.themovietestrappi.popular.presentation.presenter.PopularMoviesPresenter
 import com.rappi.themovietestrappi.popular.presentation.presenter.PopularMoviesPresenterImpl
@@ -20,7 +21,7 @@ class PopularModule {
         popularMoviesPresenterImpl
 
     @Provides
-    fun providesPopularInteractor(popularMoviesInteractorImpl: PopularMoviesInteractorImpl): PopularMoviesInteractorImpl =
+    fun providesPopularInteractor(popularMoviesInteractorImpl: PopularMoviesInteractorImpl): PopularMoviesInteractor =
         popularMoviesInteractorImpl
 
 }

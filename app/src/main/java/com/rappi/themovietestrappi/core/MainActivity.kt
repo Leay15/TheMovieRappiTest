@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.rappi.themovietestrappi.R
+import com.rappi.themovietestrappi.popular.view.fragments.PopularMoviesFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -30,5 +31,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
+
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.main_activity_content_frame_layout, PopularMoviesFragment(), "First")
+            .commit()
     }
 }

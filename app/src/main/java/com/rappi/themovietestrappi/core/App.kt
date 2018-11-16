@@ -11,7 +11,7 @@ class App : Application() {
 
     val applicationComponent: ApplicationComponent by lazy {
         DaggerApplicationComponent.builder()
-            .netModule(NetModule("https://api.themoviedb.org/3"))
+            .netModule(NetModule("https://api.themoviedb.org/3/"))
             .applicationModule(ApplicationModule(this))
             .build()
     }

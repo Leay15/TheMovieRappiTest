@@ -6,7 +6,7 @@ data class MovieResponse(
     @SerializedName("vote_count") val _voteCount: Int?,
     @SerializedName("id") val _id: Int?,
     @SerializedName("video") val _video: Boolean?,
-    @SerializedName("vote_average") val _voteAverage: Int?,
+    @SerializedName("vote_average") val _voteAverage: Double?,
     @SerializedName("title") val _title: String?,
     @SerializedName("popularity") val _popularity: Double?,
     @SerializedName("poster_path") val _posterPath: String?,
@@ -25,8 +25,8 @@ data class MovieResponse(
         get() = this._id ?: -1
     val video: Boolean
         get() = this._video ?: false
-    val voteAverage: Int
-        get() = this._voteAverage ?: -1
+    val voteAverage: Double
+        get() = this._voteAverage ?: -1.0
     val title: String
         get() = this._title ?: ""
     val popularity: Double

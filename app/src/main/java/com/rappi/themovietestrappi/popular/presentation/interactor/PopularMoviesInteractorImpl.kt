@@ -9,7 +9,7 @@ import io.reactivex.Observable
 import javax.inject.Inject
 
 
-class PopularMoviesInteractorImpl @Inject constructor(val popularMoviesService: PopularMoviesService) :
+class PopularMoviesInteractorImpl @Inject constructor(private val popularMoviesService: PopularMoviesService) :
     PopularMoviesInteractor {
 
     override fun getPopularMovies(page: Int): Observable<PopularResponse> {

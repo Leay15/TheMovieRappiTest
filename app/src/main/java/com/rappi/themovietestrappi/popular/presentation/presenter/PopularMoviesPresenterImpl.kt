@@ -6,20 +6,27 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
-class PopularMoviesPresenterImpl @Inject constructor(val popularMoviesInteractor: PopularMoviesInteractor) :
+class PopularMoviesPresenterImpl @Inject constructor(private val popularMoviesInteractor: PopularMoviesInteractor) :
     PopularMoviesPresenter {
 
-    lateinit var popularViewModel: PopularViewModel
+    private var popularViewModel: PopularViewModel? = null
 
     override fun getPopularMovies(page: Int) {
         popularMoviesInteractor.getPopularMovies(page).observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
             .subscribe({
-                popularViewModel.onGetMovies(it)
+                popularViewModel?.onGetMovies(it)
             }, {
-                popularViewModel.onError(it.message)
+                popularViewModel?.onError(it.message)
             })
 
     }
 
+    override fun bind(popularViewModel: PopularViewModel) {
+        this.popularViewModel = popularViewModel
+    }
+
+    override fun unbind() {
+        this.popularViewModel = null
+    }
 }

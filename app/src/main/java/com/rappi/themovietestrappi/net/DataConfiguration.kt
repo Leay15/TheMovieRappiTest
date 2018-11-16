@@ -6,9 +6,9 @@ object DataConfiguration {
     const val API_ACCESS_TOKEN =
         "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI5YzEwMTY3NDk3MTc4YTkxZDZlMzlkMDRjNTM4MjY3NCIsInN1YiI6IjViZWNlOTlmYzNhMzY4MTJmYTAwYjVkNCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.C-iHGGSocnePMyplyZo1xdxl77Nj2zOl1W7sL8NahL4"
 
-    const val POPULAR = "/movie/popular"
-    const val TOP_RATED = "/movie/top_rated"
-    const val UPCOMING = "/movie/upcoming"
-    const val VIDEOS = "/movie/{movie_id}/videos"
-    const val MOVIE_DETAIL = "/movie/{movie_id}"
+    const val POPULAR = "movie/popular"
+    const val TOP_RATED = "movie/top_rated"
+    const val UPCOMING = "movie/upcoming"
+    const val VIDEOS = "movie/{movie_id}/videos"
+    const val MOVIE_DETAIL = "movie/{movie_id}"
 }
