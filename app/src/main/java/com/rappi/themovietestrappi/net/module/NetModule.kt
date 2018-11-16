@@ -15,7 +15,7 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
 @Module
-class NetModule(val baseUrl: String) {
+class NetModule(private val baseUrl: String) {
 
     @Provides
     @Singleton
@@ -26,7 +26,7 @@ class NetModule(val baseUrl: String) {
 
     @Provides
     @Singleton
-    fun provideOkHttpClient(context: Application): OkHttpClient = OkHttpClient.Builder()
+    fun provideOkHttpClient(): OkHttpClient = OkHttpClient.Builder()
         .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
         .readTimeout(60, TimeUnit.SECONDS)
         .connectTimeout(60, TimeUnit.SECONDS)
