@@ -6,7 +6,6 @@ data class DatesResponse(
     @SerializedName("maximum") val _maximum: String?,
     @SerializedName("minimium") val _minimum: String?
 ) {
-
     val maximum: String
         get() = this._maximum ?: ""
     val minimum: String

@@ -39,7 +39,7 @@ class NetModule(val baseUrl: String) {
 
     @Provides
     @Singleton
-    fun provideMainRetrofit(gson: Gson, okHttpClient: OkHttpClient): Retrofit = Retrofit.Builder()
+    fun provideRetrofit(gson: Gson, okHttpClient: OkHttpClient): Retrofit = Retrofit.Builder()
         .baseUrl(this.baseUrl)
         .client(okHttpClient)
         .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
