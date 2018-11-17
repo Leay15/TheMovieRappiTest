@@ -20,13 +20,16 @@ class MovieDetailPresenterImpl @Inject constructor(private val movieDetailIntera
     }
 
     override fun getMovieDetail(movieId: Int) {
+        movieDetailViewModel?.showLoading()
         movieDetailInteractor.getMovieDetail(movieId)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
             .subscribe({
                 movieDetailViewModel?.onGetMovieDetail(it)
+                movieDetailViewModel?.hideLoading()
             }, {
                 movieDetailViewModel?.onError(it.message)
+                movieDetailViewModel?.hideLoading()
             })
     }
 

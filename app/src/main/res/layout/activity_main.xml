@@ -6,7 +6,8 @@
 		android:id="@+id/container"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
-		tools:context=".main.view.activities.MainActivity">
+		tools:context=".main.view.activities.MainActivity"
+		android:animateLayoutChanges="true">
 
 	<androidx.appcompat.widget.AppCompatSpinner
 			android:id="@+id/main_activity_genres_spinner"
