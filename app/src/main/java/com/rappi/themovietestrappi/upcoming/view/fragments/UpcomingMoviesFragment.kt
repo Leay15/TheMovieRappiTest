@@ -9,6 +9,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.rappi.themovietestrappi.R
 import com.rappi.themovietestrappi.core.getApplicationComponent
+import com.rappi.themovietestrappi.main.viewModel.CategoriesInterface
+import com.rappi.themovietestrappi.net.model.response.GenresItem
 import com.rappi.themovietestrappi.net.model.response.UpcomingResponse
 import com.rappi.themovietestrappi.upcoming.component.DaggerUpcomingComponent
 import com.rappi.themovietestrappi.upcoming.module.UpcomingModule
@@ -16,7 +18,7 @@ import com.rappi.themovietestrappi.upcoming.presentation.presenter.UpcomingPrese
 import com.rappi.themovietestrappi.upcoming.viewModel.UpcomingViewModel
 import javax.inject.Inject
 
-class UpcomingMoviesFragment : Fragment(), UpcomingViewModel {
+class UpcomingMoviesFragment : Fragment(), UpcomingViewModel, CategoriesInterface {
 
     @Inject
     lateinit var upcomingPresenter: UpcomingPresenter
@@ -64,5 +66,9 @@ class UpcomingMoviesFragment : Fragment(), UpcomingViewModel {
     }
 
     override fun onError(message: String?) {
+    }
+
+    override fun showMoviesOfCategory(genres: GenresItem) {
+
     }
 }

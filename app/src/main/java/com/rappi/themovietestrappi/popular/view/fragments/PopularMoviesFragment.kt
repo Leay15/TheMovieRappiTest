@@ -9,6 +9,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.rappi.themovietestrappi.R
 import com.rappi.themovietestrappi.core.getApplicationComponent
+import com.rappi.themovietestrappi.main.viewModel.CategoriesInterface
+import com.rappi.themovietestrappi.net.model.response.GenresItem
 import com.rappi.themovietestrappi.net.model.response.PopularResponse
 import com.rappi.themovietestrappi.popular.component.DaggerPopularComponent
 import com.rappi.themovietestrappi.popular.module.PopularModule
@@ -16,7 +18,7 @@ import com.rappi.themovietestrappi.popular.presentation.presenter.PopularMoviesP
 import com.rappi.themovietestrappi.popular.viewModel.PopularViewModel
 import javax.inject.Inject
 
-class PopularMoviesFragment : Fragment(), PopularViewModel {
+class PopularMoviesFragment : Fragment(), PopularViewModel, CategoriesInterface {
 
     @Inject
     lateinit var popularMoviesPresenter: PopularMoviesPresenter
@@ -66,6 +68,10 @@ class PopularMoviesFragment : Fragment(), PopularViewModel {
     }
 
     override fun onError(message: String?) {
+
+    }
+
+    override fun showMoviesOfCategory(genres: GenresItem) {
 
     }
 }

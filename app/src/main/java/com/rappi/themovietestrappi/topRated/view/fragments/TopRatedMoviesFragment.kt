@@ -9,6 +9,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.rappi.themovietestrappi.R
 import com.rappi.themovietestrappi.core.getApplicationComponent
+import com.rappi.themovietestrappi.main.viewModel.CategoriesInterface
+import com.rappi.themovietestrappi.net.model.response.GenresItem
 import com.rappi.themovietestrappi.net.model.response.TopRatedResponse
 import com.rappi.themovietestrappi.topRated.component.DaggerTopRatedComponent
 import com.rappi.themovietestrappi.topRated.module.TopRatedModule
@@ -16,7 +18,7 @@ import com.rappi.themovietestrappi.topRated.presentation.presenter.TopRatedPrese
 import com.rappi.themovietestrappi.topRated.viewModel.TopRatedViewModel
 import javax.inject.Inject
 
-class TopRatedMoviesFragment : Fragment(), TopRatedViewModel {
+class TopRatedMoviesFragment : Fragment(), TopRatedViewModel, CategoriesInterface {
 
     @Inject
     lateinit var topRatedPresenter: TopRatedPresenter
@@ -64,5 +66,9 @@ class TopRatedMoviesFragment : Fragment(), TopRatedViewModel {
     }
 
     override fun onError(message: String?) {
+    }
+
+    override fun showMoviesOfCategory(genres: GenresItem) {
+
     }
 }

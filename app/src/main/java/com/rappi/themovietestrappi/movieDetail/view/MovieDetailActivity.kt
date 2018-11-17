@@ -47,4 +47,8 @@ class MovieDetailActivity : AppCompatActivity(), MovieDetailViewModel {
     override fun onGetMovieDetail(movieDetail: MovieDetailResponse) {
 
     }
+
+    override fun onError(message: String?) {
+
+    }
 }

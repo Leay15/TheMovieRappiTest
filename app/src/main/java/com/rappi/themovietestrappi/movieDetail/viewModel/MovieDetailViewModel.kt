@@ -9,4 +9,6 @@ interface MovieDetailViewModel {
     fun hideLoading()
 
     fun onGetMovieDetail(movieDetail: MovieDetailResponse)
+
+    fun onError(message: String?)
 }

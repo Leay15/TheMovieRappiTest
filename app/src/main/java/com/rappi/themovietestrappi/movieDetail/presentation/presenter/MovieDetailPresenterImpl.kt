@@ -24,9 +24,9 @@ class MovieDetailPresenterImpl @Inject constructor(private val movieDetailIntera
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
             .subscribe({
-
+                movieDetailViewModel?.onGetMovieDetail(it)
             }, {
-
+                movieDetailViewModel?.onError(it.message)
             })
     }
 
