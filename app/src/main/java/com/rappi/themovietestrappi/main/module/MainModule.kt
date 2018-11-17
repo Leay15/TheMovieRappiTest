@@ -1,10 +1,11 @@
 package com.rappi.themovietestrappi.main.module
 
-import com.rappi.themovietestrappi.main.presentation.interactor.GenresInteractor
-import com.rappi.themovietestrappi.main.presentation.interactor.GenresInteractorImpl
-import com.rappi.themovietestrappi.main.presentation.presenter.GenresPresenter
-import com.rappi.themovietestrappi.main.presentation.presenter.GenresPresenterImpl
+import com.rappi.themovietestrappi.main.presentation.interactor.genres.GenresInteractor
+import com.rappi.themovietestrappi.main.presentation.interactor.genres.GenresInteractorImpl
+import com.rappi.themovietestrappi.main.presentation.presenter.genres.GenresPresenter
+import com.rappi.themovietestrappi.main.presentation.presenter.genres.GenresPresenterImpl
 import com.rappi.themovietestrappi.net.retrofit.interfaces.GetMoviesGenresService
+import com.rappi.themovietestrappi.net.retrofit.interfaces.SearchMovieService
 import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit
@@ -15,6 +16,9 @@ class MainModule {
     @Provides
     fun providesGenresService(retrofit: Retrofit): GetMoviesGenresService =
         retrofit.create(GetMoviesGenresService::class.java)
+
+    @Provides
+    fun providesSearchService(retrofit: Retrofit): SearchMovieService = retrofit.create(SearchMovieService::class.java)
 
     @Provides
     fun providesGenresPresenter(genresPresenterImpl: GenresPresenterImpl): GenresPresenter = genresPresenterImpl

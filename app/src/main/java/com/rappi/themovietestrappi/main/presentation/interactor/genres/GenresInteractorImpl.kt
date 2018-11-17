@@ -1,4 +1,4 @@
-package com.rappi.themovietestrappi.main.presentation.interactor
+package com.rappi.themovietestrappi.main.presentation.interactor.genres
 
 import com.google.gson.Gson
 import com.rappi.themovietestrappi.net.DataConfiguration
@@ -8,7 +8,8 @@ import com.rappi.themovietestrappi.net.retrofit.interfaces.GetMoviesGenresServic
 import io.reactivex.Observable
 import javax.inject.Inject
 
-class GenresInteractorImpl @Inject constructor(private val genresService: GetMoviesGenresService) : GenresInteractor {
+class GenresInteractorImpl @Inject constructor(private val genresService: GetMoviesGenresService) :
+    GenresInteractor {
 
     override fun getGenres(): Observable<GenresResponse> {
         return genresService.getMovieGenres(DataConfiguration.API_KEY).flatMap {

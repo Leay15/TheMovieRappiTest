@@ -1,4 +1,4 @@
-package com.rappi.themovietestrappi.main.presentation.presenter
+package com.rappi.themovietestrappi.main.presentation.presenter.genres
 
 import com.rappi.themovietestrappi.main.viewModel.MainActivityViewModel
 

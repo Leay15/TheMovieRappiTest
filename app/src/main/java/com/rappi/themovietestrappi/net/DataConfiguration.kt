@@ -12,4 +12,5 @@ object DataConfiguration {
     const val VIDEOS = "movie/{movie_id}/videos"
     const val MOVIE_DETAIL = "movie/{movie_id}"
     const val GENRES = "genre/movie/list"
+    const val SEARCH = "search/movie"
 }

@@ -12,11 +12,12 @@ import com.rappi.themovietestrappi.R
 import com.rappi.themovietestrappi.core.getApplicationComponent
 import com.rappi.themovietestrappi.main.component.DaggerMainComponent
 import com.rappi.themovietestrappi.main.module.MainModule
-import com.rappi.themovietestrappi.main.presentation.presenter.GenresPresenter
+import com.rappi.themovietestrappi.main.presentation.presenter.genres.GenresPresenter
 import com.rappi.themovietestrappi.main.viewModel.CategoriesInterface
 import com.rappi.themovietestrappi.main.viewModel.MainActivityViewModel
 import com.rappi.themovietestrappi.net.model.response.GenresItem
 import com.rappi.themovietestrappi.net.model.response.GenresResponse
+import com.rappi.themovietestrappi.net.model.response.PopularResponse
 import com.rappi.themovietestrappi.popular.view.fragments.PopularMoviesFragment
 import com.rappi.themovietestrappi.topRated.view.fragments.TopRatedMoviesFragment
 import com.rappi.themovietestrappi.upcoming.view.fragments.UpcomingMoviesFragment
@@ -167,5 +168,9 @@ class MainActivity : AppCompatActivity(), MainActivityViewModel {
             .setCancelable(false)
             .create()
             .show()
+    }
+
+    override fun onGetSearch(popularResponse: PopularResponse) {
+
     }
 }
