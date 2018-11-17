@@ -68,7 +68,7 @@ class TopRatedMoviesFragment : Fragment(), TopRatedViewModel, CategoriesInterfac
     override fun onError(message: String?) {
     }
 
-    override fun showMoviesOfCategory(genres: GenresItem) {
+    override fun showMoviesOfCategory(genres: GenresItem?) {
 
     }
 }

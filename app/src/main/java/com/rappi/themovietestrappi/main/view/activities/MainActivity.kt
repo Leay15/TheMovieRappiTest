@@ -102,6 +102,8 @@ class MainActivity : AppCompatActivity(), MainActivityViewModel {
 
     }
 
+    var isSettingUp = true
+
     private fun setupGenresSpinner() {
         val spinnerItems = getSpinnerItems()
         main_activity_genres_spinner.adapter =
@@ -111,8 +113,10 @@ class MainActivity : AppCompatActivity(), MainActivityViewModel {
             }
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                if (position != 0) {
+                if (!isSettingUp) {
                     showMoviesOfCategory(position - 1)
+                } else {
+                    isSettingUp = false
                 }
             }
 
@@ -133,9 +137,17 @@ class MainActivity : AppCompatActivity(), MainActivityViewModel {
     }
 
     private fun showMoviesOfCategory(position: Int) {
-        val genreSelected = genresList[position]
+        val genreSelected = if (position >= 0) {
+            genresList[position]
 
-        (currentFragment as CategoriesInterface).showMoviesOfCategory(genreSelected)
+        } else {
+            null
+        }
+
+        if (currentFragment is CategoriesInterface) {
+            (currentFragment as CategoriesInterface).showMoviesOfCategory(genreSelected)
+        }
+
     }
 
     override fun showLoading() {

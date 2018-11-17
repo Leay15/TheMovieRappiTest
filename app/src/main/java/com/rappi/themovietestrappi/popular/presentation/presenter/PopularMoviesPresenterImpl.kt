@@ -12,12 +12,15 @@ class PopularMoviesPresenterImpl @Inject constructor(private val popularMoviesIn
     private var popularViewModel: PopularViewModel? = null
 
     override fun getPopularMovies(page: Int) {
+        popularViewModel?.showLoading()
         popularMoviesInteractor.getPopularMovies(page).observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
             .subscribe({
                 popularViewModel?.onGetMovies(it)
+                popularViewModel?.hideLoading()
             }, {
                 popularViewModel?.onError(it.message)
+                popularViewModel?.hideLoading()
             })
 
     }

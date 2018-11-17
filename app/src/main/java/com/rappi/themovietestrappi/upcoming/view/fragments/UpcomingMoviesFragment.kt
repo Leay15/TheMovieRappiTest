@@ -68,7 +68,7 @@ class UpcomingMoviesFragment : Fragment(), UpcomingViewModel, CategoriesInterfac
     override fun onError(message: String?) {
     }
 
-    override fun showMoviesOfCategory(genres: GenresItem) {
+    override fun showMoviesOfCategory(genres: GenresItem?) {
 
     }
 }
