@@ -1,10 +1,10 @@
 package com.rappi.themovietestrappi.main.presentation.presenter.search
 
-import com.rappi.themovietestrappi.main.viewModel.MainActivityViewModel
+import com.rappi.themovietestrappi.main.viewModel.SearchViewModel
 
 interface SearchPresenter {
 
-    fun bind(mainActivityViewModel: MainActivityViewModel)
+    fun bind(searchViewModel: SearchViewModel)
 
     fun unbind()
 

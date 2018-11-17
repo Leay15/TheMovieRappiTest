@@ -4,6 +4,7 @@ import com.rappi.themovietestrappi.core.component.ApplicationComponent
 import com.rappi.themovietestrappi.core.scopes.ActivityScope
 import com.rappi.themovietestrappi.main.module.MainModule
 import com.rappi.themovietestrappi.main.view.activities.MainActivity
+import com.rappi.themovietestrappi.main.view.activities.SearchResultActivity
 import dagger.Component
 
 @ActivityScope
@@ -11,4 +12,6 @@ import dagger.Component
 interface MainComponent {
 
     fun inject(mainActivity: MainActivity)
+
+    fun inject(searchResultActivity: SearchResultActivity)
 }

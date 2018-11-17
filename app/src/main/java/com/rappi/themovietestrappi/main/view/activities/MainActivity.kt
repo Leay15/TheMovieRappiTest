@@ -1,11 +1,16 @@
 package com.rappi.themovietestrappi.main.view.activities
 
+import android.app.SearchManager
+import android.content.Context
+import android.graphics.Color
 import android.os.Bundle
+import android.view.Menu
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.rappi.themovietestrappi.R
@@ -23,6 +28,7 @@ import com.rappi.themovietestrappi.topRated.view.fragments.TopRatedMoviesFragmen
 import com.rappi.themovietestrappi.upcoming.view.fragments.UpcomingMoviesFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
+
 
 class MainActivity : AppCompatActivity(), MainActivityViewModel {
 
@@ -64,10 +70,34 @@ class MainActivity : AppCompatActivity(), MainActivityViewModel {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
+        setSupportActionBar(toolbar)
 
         mainComponent.inject(this)
         genresPresenter.bind(this)
         genresPresenter.getGenres()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        val menuInflater = menuInflater
+        menuInflater.inflate(R.menu.activity_main_menu, menu)
+
+        val searchItem = menu?.findItem(R.id.action_search)
+
+        val searchManager: SearchManager = this@MainActivity.getSystemService(Context.SEARCH_SERVICE) as SearchManager
+
+        var searchView: SearchView? = null
+
+        if (searchItem != null) {
+            searchView = searchItem.actionView as SearchView
+
+            var searchAutoComplete: SearchView.SearchAutoComplete =
+                searchView.findViewById(androidx.appcompat.R.id.search_src_text)
+            searchAutoComplete.setHintTextColor(Color.WHITE)
+            searchAutoComplete.setTextColor(Color.WHITE)
+        }
+        searchView?.setSearchableInfo(searchManager.getSearchableInfo(this@MainActivity.componentName))
+
+        return super.onCreateOptionsMenu(menu)
     }
 
     private fun changeActiveFragment(position: Int) {
