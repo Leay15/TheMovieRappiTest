@@ -11,4 +11,5 @@ import dagger.Component
 interface UpcomingComponent {
 
     fun inject(upcomingMoviesFragment: UpcomingMoviesFragment)
+
 }

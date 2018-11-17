@@ -17,7 +17,7 @@ import com.rappi.themovietestrappi.local.typeConvertes.CustomTypeDataConverter
     ), version = 1
 )
 @TypeConverters(CustomTypeDataConverter::class)
-public abstract class RoomDBO : RoomDatabase() {
+abstract class RoomDBO : RoomDatabase() {
 
     abstract fun getMovieGenresDAO(): GetMoviesGenresDAO
     abstract fun getMovieDetailDAO(): MovieDetailDAO

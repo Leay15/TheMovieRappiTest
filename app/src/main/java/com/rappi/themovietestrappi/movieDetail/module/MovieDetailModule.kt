@@ -1,5 +1,7 @@
 package com.rappi.themovietestrappi.movieDetail.module
 
+import com.rappi.themovietestrappi.local.room.dao.MovieDetailDAO
+import com.rappi.themovietestrappi.local.room.dbo.RoomDBO
 import com.rappi.themovietestrappi.movieDetail.presentation.interactor.MovieDetailInteractor
 import com.rappi.themovietestrappi.movieDetail.presentation.interactor.MovieDetailInteractorImpl
 import com.rappi.themovietestrappi.movieDetail.presentation.presenter.MovieDetailPresenter
@@ -15,6 +17,9 @@ class MovieDetailModule {
     @Provides
     fun providesMovieDetailService(retrofit: Retrofit): MovieDetailService =
         retrofit.create(MovieDetailService::class.java)
+
+    @Provides
+    fun providesMovieDetailDAO(roomDBO: RoomDBO): MovieDetailDAO = roomDBO.getMovieDetailDAO()
 
     @Provides
     fun providesMovieDetailPresenter(movieDetailPresenterImpl: MovieDetailPresenterImpl): MovieDetailPresenter =

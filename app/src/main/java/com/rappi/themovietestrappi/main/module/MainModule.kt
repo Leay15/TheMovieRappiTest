@@ -1,5 +1,9 @@
 package com.rappi.themovietestrappi.main.module
 
+import android.app.Application
+import androidx.room.Room
+import com.rappi.themovietestrappi.local.room.dao.GetMoviesGenresDAO
+import com.rappi.themovietestrappi.local.room.dbo.RoomDBO
 import com.rappi.themovietestrappi.main.presentation.interactor.genres.GenresInteractor
 import com.rappi.themovietestrappi.main.presentation.interactor.genres.GenresInteractorImpl
 import com.rappi.themovietestrappi.main.presentation.interactor.search.SearchInteractor
@@ -20,6 +24,14 @@ class MainModule {
     @Provides
     fun providesGenresService(retrofit: Retrofit): GetMoviesGenresService =
         retrofit.create(GetMoviesGenresService::class.java)
+
+    @Provides
+    fun providesRoomDBO(application: Application): RoomDBO =
+        Room.databaseBuilder(application, RoomDBO::class.java, "room_database").build()
+
+    @Provides
+    fun providesGetMoviesGenresDAO(roomDBO: RoomDBO): GetMoviesGenresDAO = roomDBO.getMovieGenresDAO()
+
 
     @Provides
     fun providesSearchService(retrofit: Retrofit): SearchMovieService = retrofit.create(SearchMovieService::class.java)

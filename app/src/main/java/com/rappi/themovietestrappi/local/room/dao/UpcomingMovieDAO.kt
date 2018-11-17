@@ -12,6 +12,6 @@ interface UpcomingMovieDAO {
     fun insertUpcomingMovie(upcomingResponseEntity: UpcomingResponseEntity)
 
     @androidx.room.Query("Select * from upcoming_response where page == :page")
-    fun getUpcomingMovie(page: Int): UpcomingResponseEntity
+    fun getUpcomingMovie(page: Int): UpcomingResponseEntity?
 
 }

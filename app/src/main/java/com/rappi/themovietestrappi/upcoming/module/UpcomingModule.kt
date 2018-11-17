@@ -1,5 +1,7 @@
 package com.rappi.themovietestrappi.upcoming.module
 
+import com.rappi.themovietestrappi.local.room.dao.UpcomingMovieDAO
+import com.rappi.themovietestrappi.local.room.dbo.RoomDBO
 import com.rappi.themovietestrappi.net.retrofit.interfaces.UpcomingMovieService
 import com.rappi.themovietestrappi.upcoming.presentation.interactor.UpcomingInteractor
 import com.rappi.themovietestrappi.upcoming.presentation.interactor.UpcomingInteractorImpl
@@ -15,6 +17,9 @@ class UpcomingModule {
     @Provides
     fun provideUpcomingService(retrofit: Retrofit): UpcomingMovieService =
         retrofit.create(UpcomingMovieService::class.java)
+
+    @Provides
+    fun providesUpcomingMovieDAO(roomDBO: RoomDBO): UpcomingMovieDAO = roomDBO.getUpcomingMovieDAO()
 
     @Provides
     fun providesUpcomingPresenter(upcomingPresenterImpl: UpcomingPresenterImpl): UpcomingPresenter =
