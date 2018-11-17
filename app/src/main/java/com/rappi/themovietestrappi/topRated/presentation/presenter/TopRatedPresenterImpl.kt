@@ -20,13 +20,16 @@ class TopRatedPresenterImpl @Inject constructor(private val topRatedInteractor: 
     }
 
     override fun getTopRatedMovies(page: Int) {
+        topRatedViewModel?.showLoading()
         topRatedInteractor.getTopRatedMoview(page)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
             .subscribe({
                 topRatedViewModel?.onGetTopRatedMovies(it)
+                topRatedViewModel?.hideLoading()
             }, {
                 topRatedViewModel?.onError(it?.message)
+                topRatedViewModel?.hideLoading()
             })
     }
 }

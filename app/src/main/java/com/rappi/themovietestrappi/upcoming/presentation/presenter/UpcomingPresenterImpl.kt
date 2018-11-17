@@ -18,14 +18,17 @@ class UpcomingPresenterImpl @Inject constructor(val upcomingInteractor: Upcoming
         this.upcomingViewModel = null
     }
 
-    override fun getUpcomingMoview(page: Int) {
+    override fun getUpcomingMovies(page: Int) {
+        this.upcomingViewModel?.showLoading()
         upcomingInteractor.getUpcomingMovies(page)
             .observeOn(AndroidSchedulers.mainThread())
-            .observeOn(Schedulers.io())
+            .subscribeOn(Schedulers.io())
             .subscribe({
                 upcomingViewModel?.onGetUpcomingMovies(it)
+                upcomingViewModel?.hideLoading()
             }, {
                 upcomingViewModel?.onError(it.message)
+                upcomingViewModel?.hideLoading()
             })
     }
 }

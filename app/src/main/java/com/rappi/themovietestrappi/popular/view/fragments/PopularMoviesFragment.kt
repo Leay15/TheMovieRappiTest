@@ -50,6 +50,7 @@ class PopularMoviesFragment : Fragment(), PopularViewModel, CategoriesInterface 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        isFiltering = false
 
         popularComponent.inject(this)
         popularMoviesPresenter.bind(this)
@@ -98,14 +99,14 @@ class PopularMoviesFragment : Fragment(), PopularViewModel, CategoriesInterface 
         }
     }
 
-    var onScrollListener: RecyclerView.OnScrollListener? = null
+    private var onScrollListener: RecyclerView.OnScrollListener? = null
 
     private fun addRecyclerViewOnEndsReachUpdate() {
         onScrollListener = object : RecyclerView.OnScrollListener() {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
 
-                if (!recyclerView.canScrollVertically(1)) {
+                if (!recyclerView.canScrollVertically(1) && !isFiltering) {
                     popularMoviesPresenter.getPopularMovies(currentServicePage)
                 }
             }

@@ -5,10 +5,16 @@
 			 android:layout_height="match_parent"
 			 tools:context=".topRated.view.fragments.TopRatedMoviesFragment">
 
-	<!-- TODO: Update blank fragment layout -->
-	<TextView
+	<androidx.recyclerview.widget.RecyclerView
+			android:id="@+id/fragment_top_rated_moview_recycler_view"
 			android:layout_width="match_parent"
 			android:layout_height="match_parent"
-			android:text="top rated"/>
+			android:visibility="gone"/>
+
+	<ProgressBar
+			android:id="@+id/fragment_top_rated_progress_bar"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_gravity="center"/>
 
 </FrameLayout>

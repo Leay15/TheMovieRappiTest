@@ -8,5 +8,5 @@ interface UpcomingPresenter {
 
     fun unbind()
 
-    fun getUpcomingMoview(page: Int)
+    fun getUpcomingMovies(page: Int)
 }
