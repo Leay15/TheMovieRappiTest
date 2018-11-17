@@ -94,6 +94,8 @@ class MainActivity : AppCompatActivity(), MainActivityViewModel {
                 searchView.findViewById(androidx.appcompat.R.id.search_src_text)
             searchAutoComplete.setHintTextColor(Color.WHITE)
             searchAutoComplete.setTextColor(Color.WHITE)
+
+            searchView.queryHint = "Type for a movie name"
         }
         searchView?.setSearchableInfo(searchManager.getSearchableInfo(this@MainActivity.componentName))
 
