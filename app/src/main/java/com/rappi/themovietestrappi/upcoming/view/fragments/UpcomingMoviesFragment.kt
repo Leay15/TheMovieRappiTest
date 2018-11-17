@@ -52,6 +52,7 @@ class UpcomingMoviesFragment : Fragment(), UpcomingViewModel, CategoriesInterfac
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         isFiltering = false
+
         upcomingComponent.inject(this)
         upcomingPresenter.bind(this)
 
@@ -68,7 +69,9 @@ class UpcomingMoviesFragment : Fragment(), UpcomingViewModel, CategoriesInterfac
 
     override fun onResume() {
         super.onResume()
-        upcomingPresenter.getUpcomingMovies(currentServicePage)
+        if (currentServicePage == 1) {
+            upcomingPresenter.getUpcomingMovies(currentServicePage)
+        }
     }
 
     override fun showLoading() {

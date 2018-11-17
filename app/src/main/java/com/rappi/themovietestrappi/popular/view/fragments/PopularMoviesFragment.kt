@@ -67,7 +67,9 @@ class PopularMoviesFragment : Fragment(), PopularViewModel, CategoriesInterface 
 
     override fun onResume() {
         super.onResume()
-        popularMoviesPresenter.getPopularMovies(currentServicePage)
+        if (currentServicePage == 1) {
+            popularMoviesPresenter.getPopularMovies(currentServicePage)
+        }
     }
 
     override fun showLoading() {

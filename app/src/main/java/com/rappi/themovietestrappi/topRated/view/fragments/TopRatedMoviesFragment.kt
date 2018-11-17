@@ -69,7 +69,9 @@ class TopRatedMoviesFragment : Fragment(), TopRatedViewModel, CategoriesInterfac
 
     override fun onResume() {
         super.onResume()
-        topRatedPresenter.getTopRatedMovies(currentServicePage)
+        if (currentServicePage == 1) {
+            topRatedPresenter.getTopRatedMovies(currentServicePage)
+        }
     }
 
     override fun showLoading() {
