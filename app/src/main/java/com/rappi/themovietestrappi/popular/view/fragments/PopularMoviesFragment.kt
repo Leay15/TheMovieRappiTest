@@ -69,6 +69,8 @@ class PopularMoviesFragment : Fragment(), PopularViewModel, CategoriesInterface 
         super.onResume()
         if (currentServicePage == 1) {
             popularMoviesPresenter.getPopularMovies(currentServicePage)
+        } else {
+            hideLoading()
         }
     }
 

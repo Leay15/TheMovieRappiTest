@@ -71,6 +71,8 @@ class TopRatedMoviesFragment : Fragment(), TopRatedViewModel, CategoriesInterfac
         super.onResume()
         if (currentServicePage == 1) {
             topRatedPresenter.getTopRatedMovies(currentServicePage)
+        } else {
+            hideLoading()
         }
     }
 

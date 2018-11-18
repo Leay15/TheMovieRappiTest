@@ -71,6 +71,8 @@ class UpcomingMoviesFragment : Fragment(), UpcomingViewModel, CategoriesInterfac
         super.onResume()
         if (currentServicePage == 1) {
             upcomingPresenter.getUpcomingMovies(currentServicePage)
+        } else {
+            hideLoading()
         }
     }
 
