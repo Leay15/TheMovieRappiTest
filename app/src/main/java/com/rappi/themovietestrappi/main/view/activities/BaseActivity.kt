@@ -4,42 +4,35 @@ import android.app.SearchManager
 import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
+import android.os.Handler
 import android.view.Menu
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.rappi.themovietestrappi.R
-import com.rappi.themovietestrappi.core.getApplicationComponent
-import com.rappi.themovietestrappi.main.component.DaggerMainComponent
-import com.rappi.themovietestrappi.main.module.MainModule
-import com.rappi.themovietestrappi.main.presentation.presenter.genres.GenresPresenter
+import com.rappi.themovietestrappi.main.viewModel.BaseActivity
 import com.rappi.themovietestrappi.main.viewModel.CategoriesInterface
-import com.rappi.themovietestrappi.main.viewModel.MainActivityViewModel
+import com.rappi.themovietestrappi.main.viewModel.MainViewModel
 import com.rappi.themovietestrappi.net.model.response.GenresItem
 import com.rappi.themovietestrappi.net.model.response.GenresResponse
-import com.rappi.themovietestrappi.net.model.response.PopularResponse
 import com.rappi.themovietestrappi.popular.view.fragments.PopularMoviesFragment
 import com.rappi.themovietestrappi.topRated.view.fragments.TopRatedMoviesFragment
 import com.rappi.themovietestrappi.upcoming.view.fragments.UpcomingMoviesFragment
 import kotlinx.android.synthetic.main.activity_main.*
-import javax.inject.Inject
 
 
-class MainActivity : AppCompatActivity(), MainActivityViewModel {
+class BaseActivity : AppCompatActivity(), BaseActivity {
 
-    @Inject
-    lateinit var genresPresenter: GenresPresenter
-
-    private val mainComponent by lazy {
-        DaggerMainComponent.builder()
-            .applicationComponent(this.getApplicationComponent())
-            .mainModule(MainModule())
-            .build()
+    private val mainViewModel by lazy {
+        ViewModelProvider(this)[MainViewModel::class.java]
     }
 
     private val popularMoviesFragment by lazy { PopularMoviesFragment() }
@@ -48,23 +41,24 @@ class MainActivity : AppCompatActivity(), MainActivityViewModel {
     private var currentFragmentPosition = 0
     private var currentFragment: Fragment? = null
 
-    private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
-        when (item.itemId) {
-            R.id.navigation_home -> {
-                changeActiveFragment(0)
-                return@OnNavigationItemSelectedListener true
+    private val mOnNavigationItemSelectedListener =
+        BottomNavigationView.OnNavigationItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.navigation_home -> {
+                    changeActiveFragment(0)
+                    return@OnNavigationItemSelectedListener true
+                }
+                R.id.navigation_dashboard -> {
+                    changeActiveFragment(1)
+                    return@OnNavigationItemSelectedListener true
+                }
+                R.id.navigation_notifications -> {
+                    changeActiveFragment(2)
+                    return@OnNavigationItemSelectedListener true
+                }
             }
-            R.id.navigation_dashboard -> {
-                changeActiveFragment(1)
-                return@OnNavigationItemSelectedListener true
-            }
-            R.id.navigation_notifications -> {
-                changeActiveFragment(2)
-                return@OnNavigationItemSelectedListener true
-            }
+            false
         }
-        false
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -72,9 +66,36 @@ class MainActivity : AppCompatActivity(), MainActivityViewModel {
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
         setSupportActionBar(toolbar)
 
-        mainComponent.inject(this)
-        genresPresenter.bind(this)
-        genresPresenter.getGenres()
+        subscribeToViewModel()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        mainViewModel.requestGenres()
+    }
+
+    private fun subscribeToViewModel() {
+        mainViewModel.run {
+            genresResponse.observe(this@BaseActivity, Observer { genresResponse ->
+                genresResponse?.run {
+                    genresList = this.genres
+
+                    setupGenresSpinner()
+                    changeActiveFragment(currentFragmentPosition)
+
+                }
+            })
+            isDeleted.observe(this@BaseActivity, Observer {
+                Toast.makeText(this@BaseActivity, it ?: "", Toast.LENGTH_LONG).show()
+            })
+        }
+
+        Handler(mainLooper).postDelayed(
+            {
+                mainViewModel.eliminar("Adioooos")
+            },
+            5000
+        )
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -83,7 +104,8 @@ class MainActivity : AppCompatActivity(), MainActivityViewModel {
 
         val searchItem = menu?.findItem(R.id.action_search)
 
-        val searchManager: SearchManager = this@MainActivity.getSystemService(Context.SEARCH_SERVICE) as SearchManager
+        val searchManager: SearchManager =
+            this@BaseActivity.getSystemService(Context.SEARCH_SERVICE) as SearchManager
 
         var searchView: SearchView? = null
 
@@ -97,7 +119,7 @@ class MainActivity : AppCompatActivity(), MainActivityViewModel {
 
             searchView.queryHint = "Type for a movie name"
         }
-        searchView?.setSearchableInfo(searchManager.getSearchableInfo(this@MainActivity.componentName))
+        searchView?.setSearchableInfo(searchManager.getSearchableInfo(this@BaseActivity.componentName))
 
         return super.onCreateOptionsMenu(menu)
     }
@@ -112,7 +134,7 @@ class MainActivity : AppCompatActivity(), MainActivityViewModel {
                 topRatedMoviesFragment
             }
             2 -> {
-                upcomingMoviesFragment
+                UpcomingMoviesFragment()
             }
             else -> {
                 Fragment()
@@ -127,33 +149,31 @@ class MainActivity : AppCompatActivity(), MainActivityViewModel {
 
     lateinit var genresList: List<GenresItem>
 
-    override fun onGetGenres(genresResponse: GenresResponse) {
-        this.genresList = genresResponse.genres
-
-        setupGenresSpinner()
-        changeActiveFragment(currentFragmentPosition)
-
-    }
-
     var isSettingUp = true
 
     private fun setupGenresSpinner() {
         val spinnerItems = getSpinnerItems()
         main_activity_genres_spinner.adapter =
-                ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, spinnerItems)
-        main_activity_genres_spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-            }
-
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                if (!isSettingUp) {
-                    showMoviesOfCategory(position - 1)
-                } else {
-                    isSettingUp = false
+            ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, spinnerItems)
+        main_activity_genres_spinner.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onNothingSelected(parent: AdapterView<*>?) {
                 }
-            }
 
-        }
+                override fun onItemSelected(
+                    parent: AdapterView<*>?,
+                    view: View?,
+                    position: Int,
+                    id: Long
+                ) {
+                    if (!isSettingUp) {
+                        showMoviesOfCategory(position - 1)
+                    } else {
+                        isSettingUp = false
+                    }
+                }
+
+            }
 
     }
 
@@ -195,14 +215,10 @@ class MainActivity : AppCompatActivity(), MainActivityViewModel {
         AlertDialog.Builder(this)
             .setMessage(message)
             .setTitle(getString(R.string.error_title))
-            .setPositiveButton("Retry") { dialog, which -> genresPresenter.getGenres() }
+            .setPositiveButton("Retry") { dialog, which -> mainViewModel.requestGenres() }
             .setNegativeButton("Close") { dialog, which -> this.finish() }
             .setCancelable(false)
             .create()
             .show()
-    }
-
-    override fun onGetSearch(popularResponse: PopularResponse) {
-
     }
 }

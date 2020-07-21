@@ -1,7 +1,8 @@
 package com.rappi.themovietestrappi.main.presentation.presenter.genres
 
 import com.rappi.themovietestrappi.main.presentation.interactor.genres.GenresInteractor
-import com.rappi.themovietestrappi.main.viewModel.MainActivityViewModel
+import com.rappi.themovietestrappi.main.viewModel.BaseActivity
+import com.rappi.themovietestrappi.net.model.response.GenresResponse
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
@@ -9,27 +10,23 @@ import javax.inject.Inject
 class GenresPresenterImpl @Inject constructor(private val genresInteractor: GenresInteractor) :
     GenresPresenter {
 
-    var mainActivityViewModel: MainActivityViewModel? = null
+    var baseActivity: BaseActivity? = null
 
-    override fun bind(mainActivityViewModel: MainActivityViewModel) {
-        this.mainActivityViewModel = mainActivityViewModel
+    override fun bind(baseActivity: BaseActivity) {
+        this.baseActivity = baseActivity
     }
 
     override fun unbind() {
-        this.mainActivityViewModel = null
+        this.baseActivity = null
     }
 
-    override fun getGenres() {
-        this.mainActivityViewModel?.showLoading()
+    override fun getGenres(callback: (genresResponse: GenresResponse) -> Unit) {
         genresInteractor.getGenres()
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
             .subscribe({
-                this.mainActivityViewModel?.onGetGenres(it)
-                this.mainActivityViewModel?.hideLoading()
+                callback(it)
             }, {
-                this.mainActivityViewModel?.hideLoading()
-                this.mainActivityViewModel?.onError(it.message)
-            })
+            }).dispose()
     }
 }

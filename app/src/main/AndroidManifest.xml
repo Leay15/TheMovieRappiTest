@@ -32,7 +32,7 @@
 					android:resource="@xml/searchable"/>
 		</activity>
 		<activity
-				android:name=".main.view.activities.MainActivity"
+				android:name=".main.view.activities.BaseActivity"
 				android:label="TheMovieApp"
 				android:theme="@style/AppTheme.NoActionBar">
 			<intent-filter>

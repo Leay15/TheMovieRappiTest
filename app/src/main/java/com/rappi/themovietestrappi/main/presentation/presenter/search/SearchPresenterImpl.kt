@@ -30,7 +30,7 @@ class SearchPresenterImpl @Inject constructor(private val searchInteractor: Sear
                 mainActivityViewModel?.onError(it.message)
                 mainActivityViewModel?.hideLoading()
 
-            })
+            }).dispose()
     }
 
 }
