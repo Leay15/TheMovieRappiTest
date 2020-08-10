@@ -22,7 +22,6 @@ import com.rappi.themovietestrappi.main.viewModel.BaseActivity
 import com.rappi.themovietestrappi.main.viewModel.CategoriesInterface
 import com.rappi.themovietestrappi.main.viewModel.MainViewModel
 import com.rappi.themovietestrappi.net.model.response.GenresItem
-import com.rappi.themovietestrappi.net.model.response.GenresResponse
 import com.rappi.themovietestrappi.popular.view.fragments.PopularMoviesFragment
 import com.rappi.themovietestrappi.topRated.view.fragments.TopRatedMoviesFragment
 import com.rappi.themovietestrappi.upcoming.view.fragments.UpcomingMoviesFragment
