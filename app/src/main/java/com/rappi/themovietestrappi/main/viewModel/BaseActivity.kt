@@ -36,8 +36,6 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     val genresResponse: LiveData<GenresResponse>
         get() = _genresResponse
 
-    val isDeleted = MutableLiveData<String>(null)
-
     private val _genresResponse = MutableLiveData<GenresResponse>(null)
 
     @Inject
@@ -51,11 +49,6 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         genresPresenter.getGenres {
             _genresResponse.value = it
         }
-    }
-
-    fun eliminar(dato: String) {
-        //Hacer algo
-        isDeleted.value = dato
     }
 
 }

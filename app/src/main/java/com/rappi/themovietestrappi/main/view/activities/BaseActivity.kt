@@ -84,17 +84,7 @@ class BaseActivity : AppCompatActivity(), BaseActivity {
 
                 }
             })
-            isDeleted.observe(this@BaseActivity, Observer {
-                Toast.makeText(this@BaseActivity, it ?: "", Toast.LENGTH_LONG).show()
-            })
         }
-
-        Handler(mainLooper).postDelayed(
-            {
-                mainViewModel.eliminar("Adioooos")
-            },
-            5000
-        )
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

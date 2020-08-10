@@ -5,9 +5,5 @@ import com.rappi.themovietestrappi.net.model.response.GenresResponse
 
 interface GenresPresenter {
 
-    fun bind(baseActivity: BaseActivity)
-
-    fun unbind()
-
     fun getGenres(callback : (genresResponse: GenresResponse) -> Unit)
 }

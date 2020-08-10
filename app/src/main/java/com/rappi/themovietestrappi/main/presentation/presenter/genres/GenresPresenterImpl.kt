@@ -10,16 +10,6 @@ import javax.inject.Inject
 class GenresPresenterImpl @Inject constructor(private val genresInteractor: GenresInteractor) :
     GenresPresenter {
 
-    var baseActivity: BaseActivity? = null
-
-    override fun bind(baseActivity: BaseActivity) {
-        this.baseActivity = baseActivity
-    }
-
-    override fun unbind() {
-        this.baseActivity = null
-    }
-
     override fun getGenres(callback: (genresResponse: GenresResponse) -> Unit) {
         genresInteractor.getGenres()
             .observeOn(AndroidSchedulers.mainThread())
